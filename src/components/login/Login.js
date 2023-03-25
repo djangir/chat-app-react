@@ -1,35 +1,24 @@
 import { InputBox } from "components/common";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  getAuth,
-  RecaptchaVerifier,
-  signInWithPhoneNumber,
-} from "firebase/auth";
+import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import firebaseConfig from "../../firebase/FirebaseConf";
 import { initializeApp } from "firebase/app";
 import "./login.css";
 
 function Login() {
-  const [formData, setFormData] = useState({});
+  const [phone, setPhone] = useState("");
+  const [otp, setOtp] = useState("");
   const [result, setResult] = useState("");
   const auth = getAuth();
 
   useEffect(() => {
-    window.recaptchaVerifier = new RecaptchaVerifier(
-      "recaptcha-container",
-      { size: "invisible" },
-      auth
-    );
+    window.recaptchaVerifier = new RecaptchaVerifier("recaptcha-container", { size: "invisible" }, auth);
   }, []);
 
   const loginUser = () => {
-    if (formData.phone.length == 10) {
-      signInWithPhoneNumber(
-        auth,
-        "+91" + formData.phone,
-        window.recaptchaVerifier
-      )
+    if (phone.length == 10) {
+      signInWithPhoneNumber(auth, "+91" + phone, window.recaptchaVerifier)
         .then((confirmationResult) => {
           setResult(confirmationResult);
         })
@@ -41,9 +30,9 @@ function Login() {
 
   const verifyOtp = () => {
     result
-      .confirm(formData.otp)
+      .confirm(otp)
       .then((res) => {
-        localStorage.setItem("islogin", formData.phone);
+        localStorage.setItem("islogin", phone);
         window.location.href = "/";
       })
       .catch((err) => {
@@ -55,10 +44,9 @@ function Login() {
     placeholder: "Phone Number",
     type: "text",
     className: "form-control",
-    value: formData.phone,
+    value: phone,
     onChange: (evt) => {
-      formData.phone = evt.target.value;
-      setFormData({ ...formData });
+      setPhone(evt.target.value);
     },
   };
   let label = "Phone Number";
@@ -70,13 +58,13 @@ function Login() {
     label = "OTP";
     onclick = verifyOtp;
     data = {
+      style: { colr: "red" },
       placeholder: "Otp",
       type: "number",
       className: "form-control",
-      value: formData.otp,
+      value: otp,
       onChange: (evt) => {
-        formData.otp = evt.target.value;
-        setFormData({ ...formData });
+        setOtp(evt.target.value);
       },
     };
   }
@@ -92,11 +80,7 @@ function Login() {
       >
         <p class="form-title">Sign in to your account</p>
         <div class="input-container">
-          <InputBox
-            placeholder="Enter your phone number"
-            input={data}
-            other={{ label: label }}
-          />
+          <InputBox placeholder="Enter your phone number" input={data} other={{ label: label }} />
         </div>
         <button class="submit" type="submit" onClick={onclick}>
           {btnText}
