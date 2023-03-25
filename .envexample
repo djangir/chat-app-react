@@ -1,0 +1,7 @@
+REACT_APP_APIKEY = 'secret key'
+REACT_APP_AUTH_DOMAIN = 'secret key'
+REACT_APP_PROJECT_ID = 'secret key'
+REACT_APP_STORAGE_BUCKET = 'secret key'
+REACT_APP_MESSAGESENDER_ID = 'secret key'
+REACT_APP_APP_ID = 'secret key'
+REACT_APP_MEASUREMENT_ID = 'secret key'
