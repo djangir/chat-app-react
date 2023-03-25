@@ -1,10 +1,14 @@
 import Login from "components/login/Login";
-import React from "react";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import React, { useEffect, useState } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import { Home } from "scenes";
 
-function routes() {
-  let islogin = localStorage.getItem("islogin");
+function Routes() {
+  const auth = getAuth();
+  const { currentUser } = auth;
+  let islogin = currentUser || localStorage.getItem("islogin");
+
   let returnRoutes = () => {
     if (islogin) {
       return {
@@ -37,4 +41,4 @@ function routes() {
   ]);
 }
 
-export default routes;
+export default Routes;

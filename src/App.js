@@ -1,15 +1,14 @@
-import React, { useEffect } from "react";
-import routes from "routes/Routes";
+import React from "react";
+import Routes from "routes/Routes";
 import { RouterProvider } from "react-router-dom";
 import firebaseConfig from "./firebase/FirebaseConf";
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 
 const App = () => {
   initializeApp(firebaseConfig);
   return (
     <div>
-      <RouterProvider router={routes()} />
+      <RouterProvider router={Routes()} />
       <div id="recaptcha-container" />
     </div>
   );

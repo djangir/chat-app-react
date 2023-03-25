@@ -30,8 +30,8 @@ function Login() {
     result
       .confirm(formData.otp)
       .then((res) => {
-        console.log(res);
         localStorage.setItem("islogin", formData.phone);
+        window.location.href = "/";
       })
       .catch((err) => {
         console.log(err);
