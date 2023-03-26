@@ -1,14 +1,15 @@
 import { InputBox } from "components/common";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import firebaseConfig from "../../firebase/FirebaseConf";
 import { initializeApp } from "firebase/app";
 import "./login.scss";
-
+import Loader from "components/common/Loader";
+ 
 function Login() {
   const [phone, setPhone] = useState("");
   const [otp, setOtp] = useState("");
+  const [isloading, setIsloading] = useState(false);
   const [result, setResult] = useState("");
   const auth = getAuth();
 
@@ -18,24 +19,30 @@ function Login() {
 
   const loginUser = () => {
     if (phone.length == 10) {
+      setIsloading(true);
       signInWithPhoneNumber(auth, "+91" + phone, window.recaptchaVerifier)
         .then((confirmationResult) => {
+          setIsloading(false);
           setResult(confirmationResult);
         })
         .catch((error) => {
+          setIsloading(false);
           console.log(error);
         });
     }
   };
 
   const verifyOtp = () => {
+    setIsloading(true);
     result
       .confirm(otp)
       .then((res) => {
+        setIsloading(false);
         localStorage.setItem("islogin", phone);
         window.location.href = "/";
       })
       .catch((err) => {
+        setIsloading(false);
         console.log(err);
       });
   };
@@ -90,6 +97,7 @@ function Login() {
           <div>Sign up</div>
         </p>
       </form>
+      <Loader show={isloading} />
     </div>
   );
 }
