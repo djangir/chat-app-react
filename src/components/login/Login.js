@@ -1,9 +1,11 @@
 import { InputBox } from "components/common";
 import React, { useEffect, useState } from "react";
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
-import "./login.css";
+import firebaseConfig from "../../firebase/FirebaseConf";
+import { initializeApp } from "firebase/app";
+import "./login.scss";
 import Loader from "components/common/Loader";
-
+ 
 function Login() {
   const [phone, setPhone] = useState("");
   const [otp, setOtp] = useState("");
