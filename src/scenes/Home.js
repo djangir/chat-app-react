@@ -1,21 +1,30 @@
+import ChatInputBox from "components/common/ChatInputBox";
+import NavBar from "components/common/NavBar";
 import { getAuth, signOut } from "firebase/auth";
 import React from "react";
 
 function Home() {
   let auth = getAuth();
+  const renderNavBar = () => {
+    return (
+      <div>
+        <NavBar />
+      </div>
+    );
+  };
+
+  const renderChatInput = () => {
+    return (
+      <div>
+        <ChatInputBox />{" "}
+      </div>
+    );
+  };
+
   return (
     <div>
-      Home
-      <div
-        style={{ cursor: "pointer" }}
-        onClick={() => {
-          signOut(auth);
-          window.location.href = "/";
-          localStorage.clear();
-        }}
-      >
-        Log out
-      </div>
+      {renderNavBar()}
+      {renderChatInput()}
     </div>
   );
 }

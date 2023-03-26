@@ -5,7 +5,7 @@ import firebaseConfig from "../../firebase/FirebaseConf";
 import { initializeApp } from "firebase/app";
 import "./login.scss";
 import Loader from "components/common/Loader";
- 
+
 function Login() {
   const [phone, setPhone] = useState("");
   const [otp, setOtp] = useState("");
@@ -79,20 +79,20 @@ function Login() {
   return (
     <div className="container my-3">
       <form
-        class="form"
+        className="form"
         onSubmit={(e) => {
           e.preventDefault();
           onclick();
         }}
       >
-        <p class="form-title">Sign in to your account</p>
-        <div class="input-container">
+        <p className="form-title">Sign in to your account</p>
+        <div className="input-container">
           <InputBox placeholder="Enter your phone number" input={data} other={{ label: label }} />
         </div>
-        <button class="submit" type="submit" onClick={onclick}>
+        <button className="submit" type="submit" onClick={onclick}>
           {btnText}
         </button>
-        <p class="signup-link">
+        <p className="signup-link">
           No account?
           <div>Sign up</div>
         </p>

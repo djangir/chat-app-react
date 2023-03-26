@@ -18,9 +18,9 @@ function Loader({ show }) {
           background: "#ffffffc9",
         }}
       >
-        <div class="spinner-grow spinner-grow-sm mx-1 text-danger" role="status" />
-        <div class="spinner-grow spinner-grow-sm mx-1 text-warning" role="status" />
-        <div class="spinner-grow spinner-grow-sm mx-1 text-success" role="status" />
+        <div className="spinner-grow spinner-grow-sm mx-1 text-danger" role="status" />
+        <div className="spinner-grow spinner-grow-sm mx-1 text-warning" role="status" />
+        <div className="spinner-grow spinner-grow-sm mx-1 text-success" role="status" />
       </div>
     );
   } else {
