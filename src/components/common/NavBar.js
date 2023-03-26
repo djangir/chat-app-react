@@ -1,8 +1,9 @@
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
-import React, { useCallback, useEffect, useLayoutEffect, useState } from "react";
+import React, { useCallback, useLayoutEffect, useState } from "react";
 
 function NavBar() {
   const auth = getAuth();
+
   const [currentUser, setCurrentUser] = useState(auth?.currentUser);
 
   useLayoutEffect(() => {

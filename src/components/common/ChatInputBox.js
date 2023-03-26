@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import InputBox from "./InputBox";
 
-function ChatInputBox() {
+function ChatInputBox(props) {
+  const { onclick } = props;
   const [message, setmessage] = useState("");
 
   let data = {
@@ -14,19 +15,29 @@ function ChatInputBox() {
     },
   };
 
+  const handleSubmit = () => {
+    let obj = { message };
+    if (message.trim().length) {
+      onclick(obj);
+    }
+    setmessage("");
+  };
+
   return (
     <div className="chatBox">
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          alert(message);
+          handleSubmit();
         }}
       >
         <div className="d-flex messageBox">
           <div className="w-100">
             <InputBox input={data} />
           </div>
-          <div className="pb-3 pointer">Send</div>
+          <div onClick={handleSubmit} className="pb-3 pointer">
+            Send
+          </div>
         </div>
       </form>
     </div>

@@ -10,3 +10,16 @@ body {
 .pointer {
   cursor: pointer;
 }
+
+.homebody {
+  justify-content: space-between;
+  height: 100vh;
+  .chatBody {
+    margin-top: auto;
+  }
+}
+
+.messagebox {
+  width: 100%;
+  height: 100%;
+}
