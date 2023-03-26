@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import firebaseConfig from "../../firebase/FirebaseConf";
 import { initializeApp } from "firebase/app";
-import "./login.css";
+import "./login.scss";
 
 function Login() {
   const [phone, setPhone] = useState("");
