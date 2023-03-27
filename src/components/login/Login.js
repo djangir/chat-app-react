@@ -1,10 +1,9 @@
 import { InputBox } from "components/common";
 import React, { useEffect, useState } from "react";
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
-import firebaseConfig from "../../firebase/FirebaseConf";
-import { initializeApp } from "firebase/app";
 import "./login.scss";
 import Loader from "components/common/Loader";
+import { addDoc, collection, getFirestore, limit, onSnapshot, query, serverTimestamp, where } from "firebase/firestore";
 
 function Login() {
   const [phone, setPhone] = useState("");
@@ -12,6 +11,7 @@ function Login() {
   const [isloading, setIsloading] = useState(false);
   const [result, setResult] = useState("");
   const auth = getAuth();
+  const db = getFirestore();
 
   useEffect(() => {
     window.recaptchaVerifier = new RecaptchaVerifier("recaptcha-container", { size: "invisible" }, auth);
@@ -32,14 +32,55 @@ function Login() {
     }
   };
 
-  const verifyOtp = () => {
+  const getusersData = async (data) => {
+    let users = [];
+    const phone = data.user.phoneNumber;
+
+    const q = query(collection(db, "loginUsers"), where("phoneNumber", "==", phone), limit(1));
+    onSnapshot(q, (QuerySnapshot) => {
+      QuerySnapshot.forEach((doc) => {
+        users.push({ ...doc.data(), id: doc.id });
+      });
+      if (users.length) {
+        setTimeout(() => {
+          console.log("redirect");
+          localStorage.setItem("islogin", phone);
+          window.location.href = "/";
+        }, 1000);
+      } else {
+        registerUser(data);
+      }
+    });
+    return;
+  };
+
+  const registerUser = async (data) => {
+    let newData = {
+      phoneNumber: data.user.phoneNumber,
+      uid: data.user.uid,
+      createdAt: serverTimestamp(),
+    };
+
+    await addDoc(collection(db, "loginUsers"), newData)
+      .then((res) => {
+        setTimeout(() => {
+          localStorage.setItem("islogin", phone);
+          window.location.href = "/";
+        }, 1000);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    return;
+  };
+
+  const verifyOtp = async () => {
     setIsloading(true);
-    result
+    await result
       .confirm(otp)
       .then((res) => {
         setIsloading(false);
-        localStorage.setItem("islogin", phone);
-        window.location.href = "/";
+        getusersData(res);
       })
       .catch((err) => {
         setIsloading(false);
@@ -89,7 +130,7 @@ function Login() {
         <div className="input-container">
           <InputBox placeholder="Enter your phone number" input={data} other={{ label: label }} />
         </div>
-        <button className="submit" type="submit" onClick={onclick}>
+        <button type="submit" className="text-center submit pointer">
           {btnText}
         </button>
         <p className="signup-link">

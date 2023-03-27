@@ -1,8 +1,9 @@
 import Login from "components/login/Login";
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
-import React, { useEffect, useState } from "react";
+import { getAuth } from "firebase/auth";
+import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 import { Home } from "scenes";
+import { ChatListScene } from "scenes";
 
 function Routes() {
   const auth = getAuth();
@@ -11,15 +12,23 @@ function Routes() {
 
   let returnRoutes = () => {
     if (islogin) {
-      return {
-        path: "/",
-        element: <Home />,
-      };
+      return [
+        {
+          path: "/",
+          element: <ChatListScene />,
+        },
+        {
+          path: "/:user/:phone",
+          element: <Home />,
+        },
+      ];
     } else {
-      return {
-        path: "/",
-        element: <Login />,
-      };
+      return [
+        {
+          path: "/",
+          element: <Login />,
+        },
+      ];
     }
   };
 
@@ -37,7 +46,7 @@ function Routes() {
         </div>
       ),
     },
-    returnRoutes(),
+    ...returnRoutes(),
   ]);
 }
 
