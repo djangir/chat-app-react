@@ -20,7 +20,8 @@ function ChatBody() {
 
       const q = query(
         collection(db, "messages"),
-        and(where("user_id", "==", uid), where("to_user_id", "==", user)),
+        where("user_id", "in", [uid, user]),
+        where("to_user_id", "in", [uid, user]),
         orderBy("createdAt"),
         limit(100)
       );
