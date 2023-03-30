@@ -3,10 +3,13 @@ import { query, collection, orderBy, onSnapshot, limit, getFirestore, where } fr
 import NavBar from "components/common/NavBar";
 import { useNavigate } from "react-router-dom";
 import { getAuth } from "firebase/auth";
+import { useDispatch } from "react-redux";
+import { addUser } from "components/redux/slice";
 
 function ChatListScene() {
   const db = getFirestore();
   const auth = getAuth();
+  let dispatch = useDispatch();
   const [usersData, setUsersData] = useState([]);
   const navigate = useNavigate();
 
@@ -25,7 +28,7 @@ function ChatListScene() {
   const returnUsers = () => {
     return usersData.map((item, index) => {
       if (auth?.currentUser?.phoneNumber == item.phoneNumber) {
-        return;
+        dispatch(addUser(item));
       }
       return (
         <div
@@ -41,9 +44,18 @@ function ChatListScene() {
     });
   };
 
+  const renderGroup = () => {
+    return (
+      <div className="pointer d-flex justify-content-end">
+        <div className="p-2 btn btn-warning mx-3 mt-3">create group</div>
+      </div>
+    );
+  };
+
   return (
     <div>
       <NavBar />
+      {renderGroup()}
       {returnUsers()}
     </div>
   );

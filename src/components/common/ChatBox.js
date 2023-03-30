@@ -14,10 +14,13 @@ import {
 } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function ChatBox() {
   const db = getFirestore();
   const auth = getAuth();
+  let { userData } = useSelector((state) => state);
+
   const { user, phone } = useParams();
   const [usersData, setUsersData] = useState([]);
 
@@ -34,7 +37,7 @@ function ChatBox() {
   }, []);
 
   const handleChange = async (obj) => {
-    const { uid } = auth.currentUser;
+    const { uid, phoneNumber } = auth.currentUser;
     let { message } = obj;
 
     await addDoc(collection(db, "messages"), {
@@ -43,7 +46,8 @@ function ChatBox() {
       to_user_id: usersData[0].uid,
       createdAt: serverTimestamp(),
       isGroup: false,
-      index: 1,
+      phoneNumber,
+      user_name: userData.user_name,
     });
   };
 

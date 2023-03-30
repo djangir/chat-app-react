@@ -38,7 +38,17 @@ function ChatBody() {
 
   const renderMessages = () => {
     return chatData.map((item, index) => {
-      return <div key={index}>{item.message}</div>;
+      let isRight = item.user_id == currentUser.uid ? "end-message" : "";
+      let messageStyle = item.user_id == currentUser.uid ? "right-message-text" : "left-message-text";
+
+      return (
+        <div key={index} className={`${isRight} m-2`}>
+          {/* <div> */}
+          {/* <div className="text-sm">{item.user_name || "user"}</div> */}
+          <div className={`btn btn-secondary ${messageStyle}`}>{item.message}</div>
+          {/* </div> */}
+        </div>
+      );
     });
   };
 

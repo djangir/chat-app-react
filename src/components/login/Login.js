@@ -8,6 +8,7 @@ import { addDoc, collection, getFirestore, limit, onSnapshot, query, serverTimes
 function Login() {
   const [phone, setPhone] = useState("");
   const [otp, setOtp] = useState("");
+  const [userName, setUserName] = useState("");
   const [isloading, setIsloading] = useState(false);
   const [result, setResult] = useState("");
   const auth = getAuth();
@@ -59,6 +60,7 @@ function Login() {
       phoneNumber: data.user.phoneNumber,
       uid: data.user.uid,
       createdAt: serverTimestamp(),
+      user_name: userName,
     };
 
     await addDoc(collection(db, "loginUsers"), newData)
@@ -106,7 +108,6 @@ function Login() {
     label = "OTP";
     onclick = verifyOtp;
     data = {
-      style: { colr: "red" },
       placeholder: "Otp",
       type: "number",
       className: "form-control",
@@ -116,6 +117,15 @@ function Login() {
       },
     };
   }
+
+  let titleData = {
+    placeholder: "userName",
+    className: "form-control",
+    value: userName,
+    onChange: (evt) => {
+      setUserName(evt.target.value);
+    },
+  };
 
   return (
     <div className="container my-3">
@@ -128,7 +138,11 @@ function Login() {
       >
         <p className="form-title">Sign in to your account</p>
         <div className="input-container">
-          <InputBox placeholder="Enter your phone number" input={data} other={{ label: label }} />
+          <InputBox input={titleData} other={{ label: "UserName" }} />
+        </div>
+
+        <div className="input-container">
+          <InputBox input={data} other={{ label: label }} />
         </div>
         <button type="submit" className="text-center submit pointer">
           {btnText}
