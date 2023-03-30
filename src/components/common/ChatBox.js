@@ -25,7 +25,10 @@ function ChatBox() {
   const [usersData, setUsersData] = useState([]);
 
   useEffect(() => {
-    const q = query(collection(db, "loginUsers"), and(where("phoneNumber", "==", phone), where("uid", "==", user)));
+    const q = query(
+      collection(db, "loginUsers"),
+      and(where("phoneNumber", "==", phone), where("uid", "==", user))
+    );
     const unsubscribe = onSnapshot(q, (QuerySnapshot) => {
       let users = [];
       QuerySnapshot.forEach((doc) => {
@@ -52,7 +55,7 @@ function ChatBox() {
   };
 
   return (
-    <div className="chatinputBox">
+    <div className="chatinputBox" style={{}}>
       <ChatInputBox onclick={handleChange} />
     </div>
   );
