@@ -35,8 +35,14 @@ body {
 
 .right-message-text {
   border-radius: 10px 12px 3px 10px !important;
+  color: white;
+  background-color: #493cf3;
+  border-color: 1px solid #493cf3;
 }
 
 .left-message-text {
+  color: black;
+  border: 1px solid #eaecf2;
+  background-color: #eaecf2;
   border-radius: 12px 10px 10px 3px !important;
 }

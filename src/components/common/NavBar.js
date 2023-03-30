@@ -1,6 +1,7 @@
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import React, { useCallback, useLayoutEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import "./navBar.scss";
 
 function NavBar() {
   const auth = getAuth();
@@ -20,7 +21,7 @@ function NavBar() {
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
           <NavLink className="navbar-brand" aria-current="page" to={"/"}>
-            Navbar
+            chatApp
           </NavLink>
           <button
             className="navbar-toggler"
@@ -36,7 +37,11 @@ function NavBar() {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <NavLink className="nav-link active" aria-current="page" to={"/"}>
+                <NavLink
+                  className="nav-link active"
+                  aria-current="page"
+                  to={"/"}
+                >
                   Home
                 </NavLink>
               </li>
