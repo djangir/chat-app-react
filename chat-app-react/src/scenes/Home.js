@@ -1,13 +1,15 @@
 import { ChatBox } from "components/common";
 import ChatBody from "components/common/ChatBody";
 import NavBar from "components/common/NavBar";
+import PhofileNavBar from "components/common/PhofileNavBar";
 import React from "react";
+import { useParams } from "react-router-dom";
 
 function Home() {
   const renderNavBar = () => {
     return (
       <div>
-        <NavBar />
+        <PhofileNavBar />
       </div>
     );
   };
