@@ -1,0 +1,20 @@
+.navbar {
+  background-color: #493cf3 !important;
+  color: white;
+}
+.navbar-toggler {
+  color: white;
+  border: var(--bs-border-width) solid white;
+}
+.navbar-brand {
+  color: white;
+}
+.navbar-nav .nav-link.active,
+.navbar-nav .nav-link.show {
+  color: white;
+}
+.btn-warning {
+  background-color: #493cf3;
+  color: azure;
+  border: 1px solid #493cf3;
+}
